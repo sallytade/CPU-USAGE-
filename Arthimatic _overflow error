@@ -1,0 +1,11 @@
+SELECT
+   tables.TABLE_NAME,
+   IDENT_SEED(tables.TABLE_SCHEMA + '.' + tables.TABLE_NAME) Seed,
+   IDENT_INCR(tables.TABLE_SCHEMA + '.' + tables.TABLE_NAME) Increment,
+   IDENT_CURRENT(tables.TABLE_SCHEMA + '.' + tables.TABLE_NAME) Current_Identity
+FROM
+   INFORMATION_SCHEMA.TABLES tables
+WHERE
+   OBJECTPROPERTY(OBJECT_ID(tables.TABLE_SCHEMA + '.' + tables.TABLE_NAME), 'TableHasIdentity') = 1
+   AND tables.TABLE_TYPE = 'BASE TABLE'
+   
